@@ -1,0 +1,405 @@
+@keyframes pulsing{
+	0% {opacity: 1;}
+	50% {opacity: 0.5};
+	100% {opacity: 1;}
+}
+
+*{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+*:focus{
+	outline: none;
+}
+
+h1{
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+body{
+	display: flex;
+	flex-flow: column;
+}
+
+main{
+	box-shadow: 5px 5px 50px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	margin: 30px auto;
+	width: 100%;
+	max-width: 1000px;
+	display: flex;
+}
+
+.serverList:before{
+	content: "Seznam serverů";
+	border-right: 1px solid lightgray;
+	display: block;
+	padding: 16px;
+	padding-bottom: 20px;
+	padding-right: 0;
+	font-weight: 700;
+}
+
+.serverList{
+	position: relative;
+	background:  #fafafa;
+	border-top-left-radius: inherit;
+	border-bottom-left-radius: inherit;
+	width: 250px;
+	flex-shrink: 0;
+	flex-grow: 0;
+}
+
+.serverList:after{
+	content: "";
+	position: absolute;
+	z-index: 0;
+	height: 100%;
+	width: 1px;
+	right: 0;
+	top: 0;
+	background: lightgray;
+}
+
+.serverListItem{
+	cursor: default;
+	transition: 200ms background;
+	position: relative;
+	border-bottom: 1px solid lightgray;
+	z-index: 1;
+}
+
+.serverListItem:hover{
+	background: rgba(255, 255, 255, 0.5);
+}
+
+.serverListItem.subscribed{
+	background: white;
+}
+
+.serverListItem .name{
+	font-weight: 500;
+	padding-top: 8px;
+	padding-left: 16px;
+}
+
+.serverListItem .status{
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	padding-bottom: 8px;
+	padding-left: 18px;
+}
+
+.serverListItem .status:before{
+	content: "";
+	background: black;
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	display: block;
+	margin-right: 5px;
+	transition: background 500ms;
+}
+
+.serverListItem.running .status:after{
+	content: "Běží";
+}
+
+.serverListItem.starting .status:after{
+	content: "Startuje...";
+}
+
+.serverListItem.stopping .status:after{
+	content: "Vypíná se...";
+}
+
+.serverListItem.pendingrestart .status:after{
+	content: "Restartování...";
+}
+
+.serverListItem.inactive .status:after{
+	content: "Vypnuto";
+}
+
+.serverListItem.inactivefail .status:after{
+	content: "Vypnuto (pád)";
+}
+
+.serverListItem.starting .status:before, 
+.serverListItem.pendingrestart .status:before, 
+.serverListItem.stopping .status:before{
+	background: orange;
+	animation: pulsing 1s infinite;
+}
+
+.serverListItem.running .status:before{
+	background: green;
+}
+
+.serverListItem.inactive .status:before{
+	background: gray;
+}
+
+.serverListItem.inactivefail .status:before{
+	background: red;
+}
+
+.serverListItem .action{
+	position: absolute;
+	right: 8px;
+	top: 5px;
+	z-index: 11;
+	display: flex;
+}
+
+.serverListItem .action > div{
+	padding: 4px;
+	margin-top: 4px;
+	margin-right: 4px;
+	cursor: pointer;
+	opacity: 0;
+	transition: opacity 200ms;
+	display: block;
+}
+
+.serverListItem.subscribed .action,
+.serverListItem.pendingrestart .action,
+.serverListItem.stopping .action,
+.serverListItem.inactive .action .stop,
+.serverListItem.inactive .action .restart,
+.serverListItem.inactivefail .action .stop,
+.serverListItem.inactivefail .action .restart,
+.serverListItem.running .action .start,
+.serverListItem.starting .action .start{
+	display: none;
+}
+
+.serverListItem:hover .action > div{
+	opacity : 0.2
+}
+
+.serverListItem .action > div:hover{
+	opacity: 1;
+}
+
+
+.serverListItem .action > div:before{
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+}
+
+.serverListItem .action .stop:before,
+.serverListItem .action .start:before{
+	content: "\f011";
+}
+
+.serverListItem .action .restart:before{
+	content: "\f01e";
+}
+
+.serverListItem .memoryUsage{
+	font-size: 14px;
+}
+
+.serverListItem .memoryUsage:before{
+	content: "\f2db";
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	margin-right: 5px;
+	margin-left: 16px;
+}
+
+.serverListItem .memoryBar{
+	width: 100%;
+	background: transparent;
+	border: none;
+	height: 2px;
+	display: block;
+	-webkit-appearance: none;
+	margin-top: 10px;
+}
+.serverListItem .memoryBar::-webkit-progress-bar{
+	background: transparent;
+}
+
+.serverListItem .memoryBar::-webkit-progress-value{
+	background: black;
+	transition: all 500ms;
+}
+
+/* Hlavní panel .............................. */
+
+.serverDetails{
+	flex-grow: 1;
+	padding: 20px;
+}
+
+.serverDetails .info{
+	position: relative;
+}
+
+.serverDetails .action{
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	display: flex;
+}
+
+.serverDetails .action .button{
+	border: 1px solid lightgray;
+	border-radius: 420px;
+	padding: 8px 16px;
+	margin: auto 8px;
+	cursor: pointer;
+}
+
+.serverDetails .action .button:hover{
+	background: whitesmoke;
+}
+
+.serverDetails .action .button i{
+	margin-right: 5px;
+}
+
+.console{
+	background: white;
+	color: black;
+	margin-top: 20px;
+	max-height: 1000px;
+}
+
+.console .log{
+	font-family: 'Consolas', 'Courier New', Courier, monospace;
+	border-top: 1px solid lightgray;
+	height: 500px;
+	margin-top: 5px;
+	white-space: pre-wrap;
+	overflow: auto;
+	padding: 10px;
+	font-size: 14px;
+}
+
+.console .command{
+	font-family: 'Consolas', 'Courier New', Courier, monospace;
+	background: transparent;
+	color: inherit;
+	font-size: inherit;
+	font-size: 14px;
+	border: none;
+	border-top: 1px solid lightgray;
+	width: 100%;
+	display: block;
+	padding: 10px;
+}
+
+.serverDetails .info span,
+.serverDetails h3,
+.serverDetails .console{
+	transition: all 300ms;
+}
+
+.noSubscribe .serverDetails h3{
+	font-size: 40px;
+	padding-top: 40px;
+	padding-left: 40px;
+}
+
+.noSubscribe .serverDetails .info span{
+	padding-top: 20px;
+	padding-left: 40px;
+	font-size: 20px;
+}
+
+.noSubscribe .serverDetails .console{
+	visibility: hidden;
+	max-height: 300px;
+	opacity: 0;
+}
+
+.login{
+	display: none;
+	text-align: right;
+}
+
+.login h2{
+	text-align: center;
+	padding: 28px 0px;
+	margin-bottom: 10px;
+}
+
+.requireLogin main{
+	width: auto;
+}
+
+.requireLogin .login{
+	display: block;
+}
+
+.requireLogin .serverList,
+.requireLogin .serverDetails{
+	display: none;
+}
+
+.login label{
+	display: block;
+	padding-bottom: 3px;
+	font-size: 14px;
+	font-weight: 700;
+	text-align: center;
+}
+
+.login input, .login select{
+	display: block;
+	padding: 10px 20px;
+	font-size: 16px;
+	width: 300px;
+	border: 1px solid #ddd;
+	border-radius: 100px;
+	background: whitesmoke;
+	margin: 0px 32px;
+	margin-bottom: 32px;
+}
+
+.login .button{
+	display: inline-block;
+	background: black;
+	color: white;
+	border-radius: 100px;
+	padding: 10px 30px;
+	margin-right: 32px;
+	margin-bottom: 42px;
+	margin-top: 10px;
+	cursor: pointer;
+}
+
+.login .button:hover{
+	background: purple;
+}
+
+.login label:first-of-type,
+.requireManager label,
+.requireManager #login,
+.requireManager input,
+.requireManager .login h2,
+.login h2:first-child,
+.login select,
+#managerSelect{
+	display: none;
+}
+
+.requireManager #managerSelect{
+	display: inline-block;
+}
+
+.requireManager .login select,
+.requireManager .login h2:first-child,
+.requireManager .login label:first-of-type{
+	display: block;
+}

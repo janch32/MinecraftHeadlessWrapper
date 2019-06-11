@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Minecraft Remote Manager</title>
+		<meta name="viewport" content="initial-scale=1">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+		<link rel="stylesheet" href="main.css">
+	</head>
+	<!--class="requireManager"-->
+	<body class="noSubscribe requireLogin">
+		<h1>Minecraft Remote Manager</h1>
+		<main>
+			<div class="login">
+				<h2>Vybrat server</h2>
+				<h2>Přihlášení</h2>
+				<label for="managerList" selected>Server</label>
+				<select id="managerList">
+					<option value="localhost:25500" selected>Lokální manager</option>
+				</select>
+				<label for="username">Uživatelské jméno</label>
+				<input type="text" id="username" autofocus>
+				<label for="username">Heslo</label>
+				<input type="password" id="password">
+				<div class="button" id="login">Přihlásit</div>
+				<div class="button" id="managerSelect">Vybrat server</div>
+			</div>
+			<div class="serverList" id="serverList"></div>
+			<div class="serverDetails">
+				<div class="info">
+					<h3 id="subscribedName">Server nevybrán</h3>
+					<span id="subscribedStatus">Vyber server ze seznamu vlevo</span>
+					<div class="action">
+						<div id="subscribedRestart" style="display: none" class="button restart"><i class="fas fa-redo"></i>Restartovat</div>
+						<div id="subscribedStart" style="display: none" class="button start"><i class="fas fa-power-off"></i>Spustit</div>
+						<div id="subscribedStop" style="display: none" class="button stop"><i class="fas fa-power-off"></i>Zastavit</div>
+					</div>
+				</div>
+				<div class="console">
+					<h4>Konzole</h4>
+					<div id="consoleLog" class="log"></div>
+					<input id="consoleCommand" type="text" placeholder="> příkaz" class="command">
+				</div>
+			</div>
+		</main>
+		<script src="script.js"></script>
+	</body>
+</html>
