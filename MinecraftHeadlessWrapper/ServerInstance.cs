@@ -132,14 +132,13 @@ namespace MinecraftHeadlessWrapper
 				Process.WaitForExit();
 		}
 
-		private PerformanceCounter _PerfMem = new PerformanceCounter("Process", "Working Set - Private", "");
 		private int GetMemoryUsage()
 		{
 			int mem = 0;
+
 			if (IsRunning)
 			{
-				_PerfMem.InstanceName = Process.ProcessName;
-				mem = (int)_PerfMem.NextValue() / (1024 * 1024);
+				mem = (int)(ProcessPerfMon.GetMemoryUsage(Process) / (1024 * 1024));
 			}
 
 			return mem;

@@ -52,6 +52,7 @@
     <Compile Include="Config\Config.cs" />
     <Compile Include="Config\RemoteManager.cs" />
     <Compile Include="Config\Server.cs" />
+    <Compile Include="ProcessPerfMon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RemoteManager\Client.cs" />

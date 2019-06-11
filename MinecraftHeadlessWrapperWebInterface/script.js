@@ -86,9 +86,7 @@ function updateServerInfo(details){
 		consoleCommand.disabled = true;
 		if(details.Status == "Starting" || details.Status == "Running"){
 			consoleCommand.disabled = false;
-			uptime.innerText = "Server běží";
-			if(details.StartTime)
-				uptime.innerText += " " + prettyPrintDate(Date.parse(details.StartTime));
+			uptime.innerText = "Server běží " + prettyPrintDate(Date.parse(details.StartTime));
 		}else if(details.Status == "Stopping")
 			uptime.innerText = "Server se vypíná...";
 		else if(details.Status == "Inactive")
@@ -287,7 +285,9 @@ function prettyPrintDate(date){
 
 	if(minute == 1) str.push("minutu");
 	else if(minute < 5 && minute > 1) str.push(minute + " minuty");
-	else if(minute > 0) str.push(minute + " minut");
+	else if (minute > 0) str.push(minute + " minut");
+	
+	if (str.length == 0) str.push("méně než minutu");
 
 	var last = str.pop();
 
